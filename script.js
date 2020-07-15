@@ -5,6 +5,10 @@ var generateBtn = document.querySelector("#generate");
 function generatePassword() {
   // Required variables
   const passwordLength  = prompt("How many characters do you want?");
+  if (passwordLength < 8 || passwordLength > 128) {
+    alert("Please choose a password between 8 and 128 characters");
+  } else {
+
   const upperCaseReq    = confirm("Do you want to use uppercase?");
   const numberReq       = confirm("Do you want to use numbers?");
   const specialCharReq  = confirm("Do you want to use special characters?");
@@ -39,7 +43,7 @@ function generatePassword() {
   }
   return returnedPassword;
 }
-
+}
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
