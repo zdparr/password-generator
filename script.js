@@ -4,45 +4,41 @@ var generateBtn = document.querySelector("#generate");
 // Function to generate password
 function generatePassword() {
   // Required variables
-  const passwordLength  = prompt("How many characters do you want?");
+  const passwordLength = prompt("How many characters do you want?");
   if (passwordLength < 8 || passwordLength > 128) {
     alert("Please choose a password between 8 and 128 characters");
   } else {
+    const upperCaseReq = confirm("Do you want to use uppercase?");
+    const numberReq = confirm("Do you want to use numbers?");
+    const specialCharReq = confirm("Do you want to use special characters?");
+    let returnedPassword = "";
 
-  const upperCaseReq    = confirm("Do you want to use uppercase?");
-  const numberReq       = confirm("Do you want to use numbers?");
-  const specialCharReq  = confirm("Do you want to use special characters?");
-  let returnedPassword  = "";
-  
+    // Arrays of data
+    const lowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
+    const upperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numberChars = "0123456789";
+    const specialChars = "!@#$%^&*";
 
-  // Arrays of data
-  const lowerCaseChars  = "abcdefghijklmnopqrstuvwxyz";
-  const upperCaseChars  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const numberChars     = "0123456789";
-  const specialChars    = "!@#$%^&*";
+    // Build correct array based on desired requirements
+    let charSet = lowerCaseChars;
+    if (upperCaseReq) {
+      charSet = charSet.concat(upperCaseChars);
+    }
+    if (numberReq) {
+      charSet = charSet.concat(numberChars);
+    }
+    if (specialCharReq) {
+      charSet = charSet.concat(specialChars);
+    }
 
-  // Build correct array based on desired requirements
-  let charSet = lowerCaseChars;
-  if (upperCaseReq) {
-  charSet = charSet.concat(upperCaseChars);
-  } 
-  if (numberReq) {
-    charSet = charSet.concat(numberChars);
+    // Generate password
+    for (let i = 0; i < passwordLength; i++) {
+      charSet = charSet.toString();
+      character = charSet.charAt(Math.floor(Math.random() * charSet.length));
+      returnedPassword = returnedPassword.concat(character);
+    }
+    return returnedPassword;
   }
-  if (specialCharReq) {
-    charSet = charSet.concat(specialChars);
-  }
-  console.log(charSet);
-
-  // Generate password
-  for (let i = 0; i < passwordLength; i++) {
-    
-    charSet = charSet.toString();
-    character = charSet.charAt(Math.floor(Math.random() * charSet.length));
-    returnedPassword = returnedPassword.concat(character);  
-  }
-  return returnedPassword;
-}
 }
 // Write password to the #password input
 function writePassword() {
@@ -50,7 +46,6 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
 }
 
 // Add event listener to generate button
